@@ -36,6 +36,19 @@ sourceSets {
     test {}
 }
 
+processResources {
+    from 'doc'
+    from 'bundle'
+}
+
+task doc(type: Copy) {
+    from 'doc' into 'build/doc'
+}
+
+task bundle(type: Copy) {
+    from 'bundle' into 'build/bundle'
+}
+
 repositories {
      maven { url "http://repo.maven.apache.org/maven2" }
      flatDir { dirs 'lib' }
