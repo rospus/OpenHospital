@@ -5,16 +5,24 @@ apply plugin: 'eclipse'
 group = 'org.isf'
 version = '2.0'
 
+def buildName = 'OpenHospital-' + project.version
+
 description = """OpenHospital"""
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 jar {
+	archiveName = 'OH.jar'
+	from('src') {
+   		include '**/*.xml'
+   	}
     manifest {
         attributes 'Main-Class': 'org.isf.menu.gui.Menu'
     }
 }
+
+libsDirName = buildName + '/bin'
 
 sourceSets {
     main {
@@ -24,7 +32,6 @@ sourceSets {
     }
 
     resources {
-
     	resources {
 			srcDir 'rsc'    	
     	}
@@ -36,24 +43,53 @@ sourceSets {
     test {}
 }
 
-processResources {
-    from 'doc'
-    from 'bundle'
+task copyResources {
+
+	doLast {
+		copy {
+	        from 'rsc' 
+	        into 'build/' + buildName + '/rsc'
+	    }
+	    copy {
+	        from 'doc' 
+	        into 'build/' + buildName + '/doc'
+	    }
+	    copy {
+	        from 'bundle' 
+	        into 'build/' + buildName + '/bundle'
+	    }
+	    copy {
+	    	from configurations.runtime
+	    	into 'build/' + buildName + '/lib'
+	    }
+	    copy {
+	        from 'lib/native' 
+	        into 'build/' + buildName + '/lib/native'
+	    }
+	    copy {
+	        from 'rpt' 
+	        into 'build/' + buildName + '//rpt'
+	    }
+	    copy {
+	        from '/' 
+	        include 'oh.ico'
+	        include 'README.md'
+	        include '*.cmd'
+	        include '*.sh'
+	        into 'build/' + buildName
+	        
+	    }
+	}
 }
 
-task doc(type: Copy) {
-    from 'doc' into 'build/doc'
-}
-
-task bundle(type: Copy) {
-    from 'bundle' into 'build/bundle'
-}
+compileJava.dependsOn copyResources
 
 repositories {
      maven { url "http://repo.maven.apache.org/maven2" }
      flatDir { dirs 'lib' }
      flatDir { dirs 'lib/dicom/dcm4che' }
 }
+
 dependencies {
     compile group: 'commons-beanutils', name: 'commons-beanutils', version:'1.7.0'
     compile group: 'commons-collections', name: 'commons-collections', version:'3.1'
