@@ -1,8 +1,12 @@
 # OpenHospital
 OpenHospital 2.0 (ISF OpenHospital web version) - WIP
 
-How to build with Gradle:
+## How to build with Gradle:
 From command line use command: gradlew build
 
-How to generate Eclipse project:
+## How to generate Eclipse project:
 From command line use command: gradlew eclipse
+
+## How to build with Maven:
+### (requires Maven 3.2.5 or lesser installed and configured)
+From command line use command: mvn clean install
