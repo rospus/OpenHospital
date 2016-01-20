@@ -25,4 +25,4 @@ For remote MySQL server you need to change rsc/database.properties file
 
 **Other info**
 
-Please read Admin and User manuals in doc/ folder_
+Please read Admin and User manuals in doc/ folder
