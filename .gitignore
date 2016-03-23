@@ -1,5 +1,7 @@
+.gradle
 .classpath
 .project
 .settings
 bin
 logs
+/target/
